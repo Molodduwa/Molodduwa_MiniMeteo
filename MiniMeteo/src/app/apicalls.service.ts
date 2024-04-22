@@ -18,6 +18,14 @@ export class APICallsService {
     return currentW;
   //Ritorno un observable ai componenti che richiedono il servizio
   }
+  search5D(query: string) {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${this.Token}&units=metric&lang=it`;
+
+    let currentW = this.http.get(url);
+    return currentW;
+  //Ritorno un observable ai componenti che richiedono il servizio
+  }
+
 
 
 

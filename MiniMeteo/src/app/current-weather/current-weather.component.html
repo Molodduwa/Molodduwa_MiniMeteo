@@ -8,11 +8,20 @@
       </div>
     </div>
 </div>
-<div class="container mt-5" *ngIf="results">
-    <h2>{{ results.name }}</h2>
-    <p>Temperatura attuale: {{ results.main.temp }} ° Gradi</p>
-    <p>Descrizione: {{ results.weather[0].description }}</p>
-    <p>Umidità: {{ results.main.humidity }}%</p>
-   
+
+<div *ngIf="results" class="container mt-5">
+  <div class="card">
+      <div class="card-body text-center">
+          <h3 class="card-title display-3">Dati Meteo di {{ results.name }}</h3>
+          <p class="card-text h5"><strong>Condizioni meteo:</strong> {{ results.weather[0].description }}</p>
+          <p class="card-text h5"><strong>Temperatura:</strong> {{ results.main.temp }} °C</p>
+          <p class="card-text h5"><strong>Temperatura minima:</strong> {{ results.main.temp_min }} °C</p>
+          <p class="card-text h5"><strong>Temperatura massima:</strong> {{ results.main.temp_max }} °C</p>
+          <p class="card-text h5"><strong>Pioggia (ultima ora):</strong> {{ results.rain?.['1h'] || '0' }} mm</p>
+          <p class="card-text h5"><strong>Nuvolosità:</strong> {{ results.clouds.all }}%</p>
+          <p class="card-text h5"><strong>Velocità del vento:</strong> {{ results.wind.speed }} m/s</p>
+          <img src="http://openweathermap.org/img/wn/{{ results.weather[0].icon }}@4x.png" alt="Icona meteo" class="img-fluid mt-3 w-20 h-20">
+      </div>
   </div>
-  
+</div>
+
