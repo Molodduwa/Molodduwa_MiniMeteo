@@ -1,0 +1,18 @@
+<div class="container text-center mt-5">
+    <h1 class="display-4">Ricerca della città</h1>
+  
+    <div class="input-group mt-3">
+      <input type="text" #newquery class="form-control" placeholder="Inserisci il nome della città">
+      <div class="input-group-append">
+        <button (click)="submit(newquery)" class="btn btn-dark btn-outline-light">Cerca</button>
+      </div>
+    </div>
+</div>
+<div class="container mt-5" *ngIf="results">
+    <h2>{{ results.name }}</h2>
+    <p>Temperatura attuale: {{ results.main.temp }} ° Gradi</p>
+    <p>Descrizione: {{ results.weather[0].description }}</p>
+    <p>Umidità: {{ results.main.humidity }}%</p>
+   
+  </div>
+  
