@@ -1,33 +1,71 @@
 <div class="container text-center mt-5">
-    <h1 class="display-4">Ricerca della città</h1>
-  
+    <h1 class="display-4"><strong>Ricerca della città</strong></h1>
+    <h2>Previsione del meteo nei prossimi 5 giorni ogni 3 ore (1 chiamata)</h2>
+    
+    
     <div class="input-group mt-3">
       <input type="text" #newquery class="form-control" placeholder="Inserisci il nome della città">
       <div class="input-group-append">
         <button (click)="submit(newquery)" class="btn btn-dark btn-outline-light">Cerca</button>
+        <button (click)="toggleView()" class="btn btn-dark btn-outline-light">Cambia visualizzazione</button>
       </div>
     </div>
 </div>
 
 <div *ngIf="results" class="container mt-5">
-    <h2 class="text-center mb-4">Informazioni sul meteo di {{ results.city.name }}</h2>
-    <div class="row">
-        <div class="col-lg-4 mb-4" *ngFor="let item of results.list">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h3 class="card-title">Data: {{ item.dt_txt}} </h3>
-                    <p class="card-text"><strong>Descrizione:</strong> {{ item.weather[0].description }}</p>
-                    <p class="card-text"><strong>Temperatura minima:</strong> {{ item.main.temp_min }} °C</p>
-                    <p class="card-text"><strong>Temperatura massima:</strong> {{ item.main.temp_max }} °C</p>
-                    <p class="card-text"><strong>Percepita come:</strong> {{ item.main.feels_like }} °C</p>
-                    <p class="card-text"><strong>Nuvolosità:</strong> {{ item.clouds.all }}%</p>
-                    <p class="card-text"><strong>Velocità del vento:</strong> {{ item.wind.speed }} m/s</p>
-                    <p class="card-text"><strong>Pioggia (ultime 3 ore):</strong> {{ item.rain?.['3h'] || '0' }} mm</p>
-                    <img src="http://openweathermap.org/img/wn/{{ item.weather[0].icon }}@4x.png" alt="Icona meteo" class="img-fluid mt-3" style="width: 100px; height: 100px;">
+    <ng-container *ngIf="viewMode === 'card'">
+        <h2 class="text-center mb-4">Informazioni sul meteo di {{ results.city.name }} ({{ results.city.country}})</h2>
+        <div class="row">
+            <div class="col-lg-4 mb-4" *ngFor="let item of results.list">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Data: {{ item.dt_txt}} </h3>
+                        <p class="card-text"><strong>Descrizione:</strong> {{ item.weather[0].description }}</p>
+                        <p class="card-text"><strong>Temperatura minima:</strong> {{ item.main.temp_min }} °C</p>
+                        <p class="card-text"><strong>Temperatura massima:</strong> {{ item.main.temp_max }} °C</p>
+                        <p class="card-text"><strong>Temperatura percepita:</strong> {{ item.main.feels_like }} °C</p>
+                        <p class="card-text"><strong>Nuvolosità:</strong> {{ item.clouds.all }}%</p>
+                        <p class="card-text"><strong>Velocità del vento:</strong> {{ item.wind.speed }} m/s</p>
+                        <p class="card-text"><strong>Pioggia (ultime 3 ore):</strong> {{ item.rain?.['3h'] || '0' }} mm</p>
+                        <img src="http://openweathermap.org/img/wn/{{ item.weather[0].icon }}@4x.png" alt="Icona meteo" class="img-fluid mt-3" style="width: 100px; height: 100px;">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </ng-container>
+    
+    <ng-container *ngIf="viewMode === 'table'">
+        <h2 class="text-center mb-4">Informazioni sul meteo di {{ results.city.name }} ({{ results.city.country}})</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Icona meteo</th>
+                    <th>Descrizione</th>
+                    <th>Temperatura Percepita </th>
+                    <th>Temperatura minima </th>
+                    <th>Temperatura massima </th>
+                    <th>Nuvolosità </th>
+                    <th>Pioggia (ultime 3 ore) </th>
+                    <th>Velocità del vento </th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of results.list">
+                    <td>{{ item.dt_txt }}</td>
+                    <td><img src="http://openweathermap.org/img/wn/{{ item.weather[0].icon }}@4x.png" alt="Icona meteo" class="img-fluid" style="width: 50px; height: 50px;"></td>
+                    <td>{{ item.weather[0].description }}</td>
+                    <td>{{ item.main.feels_like }} (°C)</td>
+                    <td>{{ item.main.temp_min }} (°C)</td>
+                    <td>{{ item.main.temp_max }} (°C)</td>
+                    <td>{{ item.clouds.all }} (%)</td>
+                    <td>{{ item.rain?.['3h'] || '0' }} (mm)</td>
+                    <td>{{ item.wind.speed }} (m/s)</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
 </div>
-
-

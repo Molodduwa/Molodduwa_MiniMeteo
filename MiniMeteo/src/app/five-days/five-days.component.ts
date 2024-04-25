@@ -12,7 +12,8 @@ export class FiveDaysComponent {
   title = 'first-routed-app';
   obsCW: Observable<Object>;
   results: any;
-  
+  viewMode: 'card' | 'table' = 'card'; // Imposta la modalità predefinita a 'card'
+
   constructor(public call: APICallsService) { }
 
   submit(query:HTMLInputElement): void {
@@ -24,5 +25,7 @@ export class FiveDaysComponent {
     this.obsCW.subscribe((data) => this.results = data); 
     
   }
-  
+  toggleView() {
+    this.viewMode = this.viewMode === 'card' ? 'table' : 'card'; // Alterna tra 'card' e 'table'
+  }
 }

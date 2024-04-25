@@ -25,6 +25,10 @@ export class APICallsService {
     return currentW;
   //Ritorno un observable ai componenti che richiedono il servizio
   }
+  searchAirPollution(lat: number, lon: number) {
+    const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${this.Token}`;
+    return this.http.get(url);
+  }
 
 
 
